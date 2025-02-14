@@ -34,6 +34,8 @@ driver.get("https://entertain.naver.com/ranking")
 
 # 스크래핑
 for i in range(4):
+    print(f"{i+1}번째 기사 스크래핑중...")
+
     articles = driver.find_elements(By.CLASS_NAME, "NewsItem_news_item__fhEmd")
     # i 번째 기사 클릭
     article_link = articles[i].find_element(By.TAG_NAME, "a")
@@ -46,6 +48,7 @@ for i in range(4):
         )
     )
     title = title_element.text
+    print(f"제목 : {title}")
 
     # 본문과 이미지를 순서대로 저장할 리스트
     content_list = []
@@ -89,6 +92,9 @@ for i in range(4):
 
     except Exception as e:
         print("오류 발생:", e)
+
+    print(f"썸네일 : {thumbnail}")
+    print(" ")
 
     # 데이터베이스에 저장
     Article.objects.create(title=title, content=content_list, thumbnail=thumbnail)
