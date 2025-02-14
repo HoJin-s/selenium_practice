@@ -25,7 +25,6 @@ class Article(models.Model):
         return days[day]
 
     def save(self, *args, **kwargs):
-        print(localtime())
         if not self.pk:
             self.created_at = localtime().replace(
                 minute=0, second=0, microsecond=0
