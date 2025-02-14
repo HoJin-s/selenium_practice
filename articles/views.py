@@ -8,9 +8,11 @@ from .serializers import ArticleSerializer
 
 
 class ArticleView(APIView):
-    # 게시글 조회
-    def get(self, request):
-        articles = Article.objects.all()
+    # 기사 요일별로 GET
+    def get(self, request, article_day_of_week_category):
+        articles = Article.objects.filter(
+            day_of_week_category=article_day_of_week_category
+        )
         serializer = ArticleSerializer(articles, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
