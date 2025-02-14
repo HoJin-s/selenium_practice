@@ -23,6 +23,15 @@ export default [
       'no-undef': ['error', { typeof: true }],
       // node 모듈 사용을 허용
       'import/no-nodejs-modules': 'off',
+
+       // Vue 컴포넌트 파일 이름 규칙 설정
+       'vue/match-component-file-name': ['error', {
+        'extensions': ['vue'],
+        // 대소문자 구분
+        'shouldMatchCase': false, 
+        // 'View'로 끝나는 파일 이름을 'View'를 제거하고 비교
+        'transform': (str) => str.replace(/View$/, '') 
+      }],
     },
   },
 ]
