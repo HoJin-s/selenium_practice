@@ -1,0 +1,8 @@
+a {
+    color: var(--second-gray);
+
+    &:hover {
+        color: var(--second-gray);
+        font-weight: 600;
+    }
+}
