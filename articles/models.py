@@ -7,6 +7,7 @@ class Article(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    thumbnail = models.URLField(blank=True, null=True)
     day_of_week_category = models.CharField(max_length=20, editable=False)  # 요일 저장
 
     def _change_day(self, day):
