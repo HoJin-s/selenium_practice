@@ -1,24 +1,5 @@
 from django.db import models
-
-
-# 카테고리 모델
-class Category(models.Model):
-    CATEGORIES = (
-        ("월요일", "월요일"),
-        ("화요일", "화요일"),
-        ("수요일", "수요일"),
-        ("목요일", "목요일"),
-        ("금요일", "금요일"),
-        ("토요일", "토요일"),
-        ("일요일", "일요일"),
-    )
-    name = models.CharField("카테고리", max_length=20, choices=CATEGORIES, null=False)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name_plural = "Categories"
+from django.utils.timezone import localtime
 
 
 # 게시글 모델
@@ -27,9 +8,12 @@ class Article(models.Model):
     content = models.TextField()
     image = models.URLField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    day_of_week = models.CharField(max_length=10)
-    category = models.ForeignKey(Category, null=False, on_delete=models.CASCADE)
-    summary = models.TextField()
+    day_of_week_category = models.CharField(max_length=20, editable=False)  # 요일 저장
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.day_of_week_category = localtime().strftime("%A")
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return str(self.title)
