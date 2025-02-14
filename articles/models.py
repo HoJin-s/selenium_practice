@@ -6,10 +6,11 @@ from django.utils.timezone import localtime
 class Article(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField()
     thumbnail = models.URLField(blank=True, null=True)
     day_of_week_category = models.CharField(max_length=20, editable=False)  # 요일 저장
 
+    # 요일 영문을 한글로 바꾸기
     def _change_day(self, day):
         days = {
             "Monday": "월요일",
@@ -25,7 +26,10 @@ class Article(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            self.day_of_week_category = localtime().strftime("%A")
+            self.created_at = localtime().replace(
+                minute=0, second=0, microsecond=0
+            )  # 시까지만 저장
+            self.day_of_week_category = localtime().strftime("%A")  # 요일(영문)
 
         self.day_of_week_category = self._change_day(self.day_of_week_category)
 
