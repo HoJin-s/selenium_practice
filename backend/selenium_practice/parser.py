@@ -62,7 +62,7 @@ for i in range(4):
         # BeautifulSoup을 사용하여 HTML 파싱
         soup = BeautifulSoup(article_content.get_attribute("innerHTML"), "html.parser")
         thumb = False
-        thumbnail = []
+        thumbnail = ""
 
         for elem in soup.children:  # 모든 자식 요소 순회
             if elem.name == "span":  # 이미지가 포함된 span 태그
@@ -71,7 +71,7 @@ for i in range(4):
                     img_url = img_tag["src"]
                     content_list.append(img_url)  # 이미지 URL 저장
                     if not thumb:
-                        thumbnail.append(img_url)  # 첫 번째 이미지만 썸네일 저장
+                        thumbnail += img_url  # 첫 번째 이미지만 썸네일 저장
                         thumb = True
             elif elem.name == "div":  # 이미지가 포함된 div 태그
                 img_tag = elem.find("img")
@@ -79,7 +79,7 @@ for i in range(4):
                     img_url = img_tag["src"]
                     content_list.append(img_url)  # 이미지 URL 저장
                     if not thumb:
-                        thumbnail.append(img_url)  # 첫 번째 이미지만 썸네일 저장
+                        thumbnail += img_url  # 첫 번째 이미지만 썸네일 저장
                         thumb = True
             elif elem.name is None:  # 텍스트 노드
                 text = elem.strip()
