@@ -41,6 +41,10 @@ for i in range(4):
     article_link = articles[i].find_element(By.TAG_NAME, "a")
     article_link.click()
 
+    WebDriverWait(driver, 10).until(
+        lambda d: d.execute_script("return document.readyState") == "complete"
+    )
+
     # 최대 10초 대기하면서 title text 로 가져오기
     title_element = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located(
