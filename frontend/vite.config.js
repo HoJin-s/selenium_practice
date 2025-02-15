@@ -33,6 +33,7 @@ export default defineConfig({
       }
     }
   },
+  base: '/static/',
   server: {
     proxy: {
       '/api': 'http://127.0.0.1:8000', // Django API 프록시 설정
