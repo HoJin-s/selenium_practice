@@ -68,6 +68,10 @@ for i in range(4):
             if elem.name == "span":  # 이미지가 포함된 span 태그
                 img_tag = elem.find("img")
                 if img_tag:
+                    # 이미지가 로드될 때까지 기다리기
+                    WebDriverWait(driver, 5).until(
+                        EC.presence_of_element_located((By.TAG_NAME, "img"))
+                    )
                     img_url = img_tag["src"]
                     content_list.append(img_url)  # 이미지 URL 저장
                     if not thumb:
@@ -76,6 +80,9 @@ for i in range(4):
             elif elem.name == "div":  # 이미지가 포함된 div 태그
                 img_tag = elem.find("img")
                 if img_tag:
+                    WebDriverWait(driver, 5).until(
+                        EC.presence_of_element_located((By.TAG_NAME, "img"))
+                    )
                     img_url = img_tag["src"]
                     content_list.append(img_url)  # 이미지 URL 저장
                     if not thumb:
