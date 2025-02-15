@@ -63,15 +63,33 @@ for i in range(4):
             EC.presence_of_element_located((By.CLASS_NAME, "_article_content"))
         )
 
-        # Lazy Load 해결을 위해 스크롤 다운
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(2)  # 이미지 로딩 대기
-
         # JavaScript를 사용하여 전체 HTML 가져오기
         full_html = driver.execute_script(
             "return arguments[0].outerHTML;", article_content
         )
         soup = BeautifulSoup(full_html, "html.parser")
+
+        # 이미지를 모두 로드할 때까지 기다리기
+        WebDriverWait(driver, 10).until(
+            lambda d: d.execute_script(
+                """
+                let images = document.querySelectorAll('img');
+                let loaded = 0;
+                let total = images.length;
+
+                for (let img of images) {
+                    if (img.complete) {
+                        loaded++;
+                    } else {
+                        img.onload = () => {
+                            loaded++;
+                        };
+                    }
+                }
+                return loaded === total;
+            """
+            )
+        )
 
         # JavaScript로 모든 이미지 src 가져오기
         img_tags = driver.execute_script(
