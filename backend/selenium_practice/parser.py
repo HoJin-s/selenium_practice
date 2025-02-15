@@ -52,7 +52,7 @@ for i in range(4):
         )
     )
     title = title_element.text
-    print(f"제목 : {title}")
+    # print(f"제목 : {title}")
 
     # 본문과 이미지를 순서대로 저장할 리스트
     content_list = []
@@ -63,11 +63,22 @@ for i in range(4):
             EC.presence_of_element_located((By.CLASS_NAME, "_article_content"))
         )
 
+        # 이미지 로드될 때까지 기다리기 (최대 10초)
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located(
+                (By.CLASS_NAME, "NewsEndMain_image_wrap__djL-o")
+            )
+        )
+
+        # Lazy Load 대비: 페이지를 맨 아래로 스크롤
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(2)  # 이미지 로딩 대기
+
         # BeautifulSoup을 사용하여 HTML 파싱
         soup = BeautifulSoup(article_content.get_attribute("innerHTML"), "html.parser")
         thumb = False
         thumbnail = ""
-
+        print(soup)
         for elem in soup.children:  # 모든 자식 요소 순회
             if elem.name == "span":  # 이미지가 포함된 span 태그
                 img_tag = elem.find("img")
@@ -97,7 +108,7 @@ for i in range(4):
     except Exception as e:
         print("오류 발생:", e)
 
-    print(f"썸네일 : {thumbnail}")
+    # print(f"썸네일 : {thumbnail}")
     print(" ")
 
     # 데이터베이스에 저장
