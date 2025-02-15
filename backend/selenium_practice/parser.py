@@ -31,6 +31,7 @@ driver = webdriver.Chrome(options=options)
 
 # 크롬 드라이버로 원하는 url 접속
 driver.get("https://entertain.naver.com/ranking")
+time.sleep(2)
 
 # 스크래핑
 for i in range(4):
@@ -40,6 +41,7 @@ for i in range(4):
     # i 번째 기사 클릭
     article_link = articles[i].find_element(By.TAG_NAME, "a")
     article_link.click()
+    time.sleep(2)
 
     WebDriverWait(driver, 10).until(
         lambda d: d.execute_script("return document.readyState") == "complete"
@@ -68,28 +70,6 @@ for i in range(4):
             "return arguments[0].outerHTML;", article_content
         )
         soup = BeautifulSoup(full_html, "html.parser")
-
-        # 이미지를 모두 로드할 때까지 기다리기
-        WebDriverWait(driver, 10).until(
-            lambda d: d.execute_script(
-                """
-                let images = document.querySelectorAll('img');
-                let loaded = 0;
-                let total = images.length;
-
-                for (let img of images) {
-                    if (img.complete) {
-                        loaded++;
-                    } else {
-                        img.onload = () => {
-                            loaded++;
-                        };
-                    }
-                }
-                return loaded === total;
-            """
-            )
-        )
 
         # JavaScript로 모든 이미지 src 가져오기
         img_tags = driver.execute_script(
