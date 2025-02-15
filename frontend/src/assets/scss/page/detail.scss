@@ -1,1 +1,24 @@
+.article-detail-wrap {
+    width: 80%;
+    margin: 30px auto;
 
+    .detail-title {
+        width: 100%;
+        height: 2px;
+        background-color: var(--second-gray);
+    }
+
+    .detail-content {
+        width: 60%;
+        margin: 30px auto;
+    
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+    
+    
+    }
+}

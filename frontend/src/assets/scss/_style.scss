@@ -4,6 +4,7 @@
     /* background color */
     --white: #fff;
     --pastel-pink: rgb(252, 234, 234);
+    --pastel-purple: rgb(123, 121, 212);
     
     /* font color */
     --first-gray: #a3a3a3;
@@ -19,7 +20,7 @@ body {
   margin: 0;
 
   font-family: var(--main-font);
-
+  user-select: none;
 }
 
 div {
@@ -43,4 +44,18 @@ a {
   text-decoration-line: none;
 }
 
+a {
+  color: var(--second-gray);
+
+  &:hover {
+      color: var(--second-gray);
+      font-weight: 600;
+  }
+}
+
+.container {
+  width: 100%;
+  padding: 0 5%;
+  box-sizing: border-box;
+}
 

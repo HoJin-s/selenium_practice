@@ -3,7 +3,7 @@
       <div class="footer-line"></div>
       <div class="footer-content-wrap">
         <div class="footer-title">
-          <img src="@/assets/image/article.png" />
+          <img src="@/assets/image/article.png" alt="logo"/>
           <h3>호진일보</h3>
         </div>
         <div class="footer-link-wrap">
@@ -16,7 +16,7 @@
               <ul v-for="link in article.data" key="link">
                 <li>
                   <a :href="link.link" target="_blank">
-                    <img src="@/assets/image/arrow.svg" />
+                    <img src="@/assets/image/arrow.svg" alt="link_arrow"/>
                     {{ link.title }}
                   </a>
                 </li>
