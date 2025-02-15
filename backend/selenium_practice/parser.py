@@ -52,66 +52,48 @@ for i in range(4):
         )
     )
     title = title_element.text
-    # print(f"제목 : {title}")
+    print(f"제목 : {title}")
 
     # 본문과 이미지를 순서대로 저장할 리스트
     content_list = []
 
     try:
-        # 최대 10초 대기하면서 content 가져오기
+        # 기사 본문 가져오기
         article_content = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CLASS_NAME, "_article_content"))
         )
 
-        # 이미지 로드될 때까지 기다리기 (최대 10초)
-        WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located(
-                (By.CLASS_NAME, "NewsEndMain_image_wrap__djL-o")
-            )
-        )
-
-        # Lazy Load 대비: 페이지를 맨 아래로 스크롤
+        # Lazy Load 해결을 위해 스크롤 다운
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(2)  # 이미지 로딩 대기
 
+        # JavaScript를 사용하여 전체 HTML 가져오기
         full_html = driver.execute_script(
             "return arguments[0].outerHTML;", article_content
         )
         soup = BeautifulSoup(full_html, "html.parser")
 
-        thumb = False
-        thumbnail = ""
-        print(soup)
-        for elem in soup.children:  # 모든 자식 요소 순회
-            if elem.name == "span":  # 이미지가 포함된 span 태그
-                img_tag = elem.find("img")
-                if img_tag:
-                    img_url = img_tag["src"]
-                    content_list.append(img_url)  # 이미지 URL 저장
-                    if not thumb:
-                        thumbnail += img_url  # 첫 번째 이미지만 썸네일 저장
-                        thumb = True
-            elif elem.name == "div":  # 이미지가 포함된 div 태그
-                img_tag = elem.find("img")
-                if img_tag:
-                    img_url = img_tag["src"]
-                    content_list.append(img_url)  # 이미지 URL 저장
-                    if not thumb:
-                        thumbnail += img_url  # 첫 번째 이미지만 썸네일 저장
-                        thumb = True
-            elif elem.name is None:  # 텍스트 노드
+        # JavaScript로 모든 이미지 src 가져오기
+        img_tags = driver.execute_script(
+            "return Array.from(document.querySelectorAll('._article_content img')).map(img => img.src);"
+        )
+
+        # 첫 번째 이미지를 썸네일로 저장
+        thumbnail = img_tags[0] if img_tags else ""
+
+        for elem in soup.descendants:  # `descendants` 사용
+            if isinstance(elem, str):  # 순수 텍스트 (HTML 태그가 아님)
                 text = elem.strip()
                 if text:
                     content_list.append(text)
-            else:  # 기타 태그 내 텍스트
-                text = elem.get_text(strip=True)
-                if text:
-                    content_list.append(text)
+
+            elif elem.name == "img":  # 직접 img 태그인 경우
+                content_list.append(elem["src"])
 
     except Exception as e:
         print("오류 발생:", e)
 
-    # print(f"썸네일 : {thumbnail}")
+    print(f"썸네일 : {thumbnail}")
     print(" ")
 
     # 데이터베이스에 저장
