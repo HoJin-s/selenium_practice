@@ -74,8 +74,11 @@ for i in range(4):
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(2)  # 이미지 로딩 대기
 
-        # BeautifulSoup을 사용하여 HTML 파싱
-        soup = BeautifulSoup(article_content.get_attribute("innerHTML"), "html.parser")
+        full_html = driver.execute_script(
+            "return arguments[0].outerHTML;", article_content
+        )
+        soup = BeautifulSoup(full_html, "html.parser")
+
         thumb = False
         thumbnail = ""
         print(soup)
