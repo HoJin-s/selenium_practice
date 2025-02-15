@@ -18,7 +18,7 @@ export default defineConfig({
   },
   build: {
     // Vue 빌드 결과물을 Django static 폴더로
-    outDir: path.resolve(__dirname, '../static'), 
+    outDir: path.resolve(__dirname, '../backend/static'), 
     // 기존 빌드 파일 삭제 후 새로 생성
     emptyOutDir: true, 
     rollupOptions: {
