@@ -10,7 +10,10 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("articles/", include("articles.urls")),
     path("", home, name="home"),
-    re_path(r"^.*$", TemplateView.as_view(template_name="index.html")),
+    re_path(
+        r"^(?!admin)(?!static)(?!media).*",
+        TemplateView.as_view(template_name="index.html"),
+    ),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

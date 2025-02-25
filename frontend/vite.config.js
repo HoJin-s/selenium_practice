@@ -37,6 +37,10 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': 'http://127.0.0.1:8000', // Django API 프록시 설정
+      '/admin': {
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true,
+      }
     }
   }
 })
