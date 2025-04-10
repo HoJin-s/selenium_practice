@@ -1,11 +1,13 @@
 <template>
   <div class="article-detail-wrap">
-    <h1>{{ article?.title }}</h1>
+    <h1><img @click="goBack" src="@/assets/image/back.png"/>{{ article?.title }}</h1>
     <div class="detail-title"></div>
-    <div class="detail-content">
-      <div v-for="content in article?.content" :key="content">
-        <img v-if="content?.includes('https://')" :src="content" />
-        <p v-else>{{ content }}</p>
+    <div class="detail-content-wrap">
+      <div class="detail-content">
+        <div v-for="content in article?.content" :key="content">
+          <img v-if="content?.includes('https://')" :src="content" />
+          <p v-else>{{ content }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -34,8 +36,13 @@ function loadArticle() {
   }
 }
 
+function goBack() {
+  router.go(-1);
+}
+
 
 onMounted(() => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
   loadArticle();
 })
 </script>

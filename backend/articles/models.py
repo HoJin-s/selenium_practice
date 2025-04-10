@@ -30,13 +30,15 @@ class Article(models.Model):
             self.created_at = localtime().replace(
                 minute=0, second=0, microsecond=0
             )  # 시까지만 저장
-            self.day_of_week_category = localtime().strftime("%A")  # 요일(영문)
+            raw_day = self.day_of_week_category if self.day_of_week_category else localtime().strftime("%A")
+            self.day_of_week_category = self._change_day(raw_day)
 
         # content를 JSON 문자열로 변환하여 저장
         if isinstance(self.content, list):
             self.content = json.dumps(self.content, ensure_ascii=False)
 
-        self.day_of_week_category = self._change_day(self.day_of_week_category)
+
+        # self.day_of_week_category = self._change_day(self.day_of_week_category)
 
         super().save(*args, **kwargs)
 
