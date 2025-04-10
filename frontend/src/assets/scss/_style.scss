@@ -7,6 +7,8 @@
     --pastel-pink: rgb(252, 234, 234);
     --pastel-pink-shadow: rgba(252, 234, 234, 0.5);
     --pastel-purple: rgb(123, 121, 212);
+    --scroll-pink: #e68a97;
+    --scroll-purple: #c797c9;
     
     /* font color */
     --first-gray: #a3a3a3;
@@ -20,9 +22,14 @@ body {
   width: 100%;
   height: 100%;
   margin: 0;
+  padding: 0;
 
   font-family: var(--main-font);
   user-select: none;
+}
+
+html {
+  margin: 0;
 }
 
 div {
@@ -57,7 +64,32 @@ a {
 
 .container {
   width: 100%;
-  padding: 0 5%;
+  padding: 96px 5% 0 5%;
   box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 10px;              
+  height: 8px;             
+}
+
+::-webkit-scrollbar-track {
+  background: var(--card-bg);      
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scroll-pink); 
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scroll-purple);     
+  border: 2px solid transparent;
+  background-clip: content-box;
+  border-radius: 10px;
+
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="category-btn-container">
+    <div class="category-btn-container" data-aos="flip-down" data-aos-duration="1000">
       <div 
       v-for="day in days" :key="day"
       class="day-btn"
@@ -19,7 +19,7 @@
     </div>
     <div v-if="ArticleList.length > 0 && loadStatus">
       <div v-for="article in ArticleList" :key="article">
-        <RouterLink :to="`detail/${article.id}`" class="articles-list-container">
+        <RouterLink :to="`detail/${article.id}`" class="articles-list-container"  data-aos="fade-up"  data-aos-duration="1000">
           <div v-if="article.thumbnail" class="defalt-thumbnail-wrap">
             <img :src="article.thumbnail" alt="thumbnail" />
           </div>
@@ -42,6 +42,9 @@
 </template>
   
 <script setup>
+import 'aos/dist/aos.css'
+import AOS from 'aos'
+
 import { ref, onMounted } from 'vue';
 import { DaysArticles } from "@/api/articleApi"
 
@@ -120,6 +123,8 @@ function hoverOff(day) {
 onMounted(() => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
   loadAllArticles();
+  AOS.init();
+  AOS.refresh();
 })
 
 </script>

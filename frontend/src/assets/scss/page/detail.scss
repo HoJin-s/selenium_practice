@@ -11,6 +11,11 @@
             width: 50px;
             height: fit-content;
             cursor: pointer;
+            
+            &:hover {
+                transition: all 0.5s;
+                transform: scale(1.2);
+            }
         }
     }
 

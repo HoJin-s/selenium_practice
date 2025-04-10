@@ -39,12 +39,12 @@
     justify-content: center;
     gap: 30px;
 
-    &:hover {
+    &.aos-animate:hover {
         font-weight: 200;
         background-color: var(--pastel-pink);
         border-radius: 20px;
         transition: all 0.5s;
-        transform: scale(1.02);
+        transform: translateY(0) scale(1.05);
     }
 
     .defalt-thumbnail-wrap {
