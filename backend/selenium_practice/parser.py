@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import os
 import sys
 import django
+import datetime
 from bs4 import BeautifulSoup
 
 # 콘솔 출력 인코딩을 UTF-8로 변경
@@ -30,8 +31,12 @@ options.add_experimental_option("excludeSwitches", ["enable-logging"])
 driver = webdriver.Chrome(options=options)
 
 # 크롬 드라이버로 원하는 url 접속
-driver.get("https://entertain.naver.com/ranking")
-time.sleep(2)
+want_day = ""
+if want_day:
+    driver.get(f"https://m.entertain.naver.com/ranking?rankingDate={want_day}")
+    time.sleep(2)
+else:
+    driver.get(f"https://m.entertain.naver.com/ranking")
 
 # 스크래핑
 for i in range(4):
@@ -40,7 +45,10 @@ for i in range(4):
     articles = driver.find_elements(By.CLASS_NAME, "NewsItem_news_item__fhEmd")
     # i 번째 기사 클릭
     article_link = articles[i].find_element(By.TAG_NAME, "a")
-    article_link.click()
+    # article_link.click()
+    driver.execute_script("arguments[0].scrollIntoView(true);", article_link)
+    time.sleep(1)
+    driver.execute_script("arguments[0].click();", article_link)
     time.sleep(2)
 
     WebDriverWait(driver, 10).until(
@@ -56,6 +64,11 @@ for i in range(4):
     title = title_element.text
     print(f"제목 : {title}")
 
+    # 날짜 돌린 일자로 자동 저장 
+    if want_day:
+        date = datetime.datetime.strptime(want_day, "%Y%m%d")
+        weekday = date.strftime("%A")  
+        
     # 본문과 이미지를 순서대로 저장할 리스트
     content_list = []
 
@@ -95,7 +108,11 @@ for i in range(4):
     print(" ")
 
     # 데이터베이스에 저장
-    Article.objects.create(title=title, content=content_list, thumbnail=thumbnail)
+    if want_day:
+        Article.objects.create(title=title, content=content_list, thumbnail=thumbnail, day_of_week_category=weekday)
+    else:
+        Article.objects.create(title=title, content=content_list, thumbnail=thumbnail)
+
 
     # 뒤로가기 실행하여 이전 페이지로 돌아감
     driver.execute_script("window.history.go(-1)")
