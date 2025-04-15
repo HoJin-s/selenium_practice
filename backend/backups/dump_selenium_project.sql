@@ -324,6 +324,38 @@ LOCK TABLES `django_session` WRITE;
 INSERT INTO `django_session` VALUES ('glb0665ega54zmgn527xta7bs91ev2dd','.eJxVjEEOgjAQRe_StWnaGWjBpXvP0Ew7M4IaSCisjHdXEha6_e-9_zKJtnVIW5UljWzOxpvT75apPGTaAd9pus22zNO6jNnuij1otdeZ5Xk53L-DgerwrZ1AQceeNITeQ0tFEblERzk0LYpy18TspA8aOgRUYuHeKUIBgajm_QHtxThb:1tmktu:k2SevYR44Frk7i9i0f0-ZEUGTdLhtNaCK3sE3F6n0ac','2025-03-11 02:42:26.271699');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary view structure for view `user_summary`
+--
+
+DROP TABLE IF EXISTS `user_summary`;
+/*!50001 DROP VIEW IF EXISTS `user_summary`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `user_summary` AS SELECT 
+ 1 AS `id`,
+ 1 AS `username`,
+ 1 AS `email`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Final view structure for view `user_summary`
+--
+
+/*!50001 DROP VIEW IF EXISTS `user_summary`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb3 */;
+/*!50001 SET character_set_results     = utf8mb3 */;
+/*!50001 SET collation_connection      = utf8mb3_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `user_summary` AS select `auth_user`.`id` AS `id`,`auth_user`.`username` AS `username`,`auth_user`.`email` AS `email` from `auth_user` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -334,4 +366,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-25 15:55:17
+-- Dump completed on 2025-02-25 23:19:25
