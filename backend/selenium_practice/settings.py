@@ -56,15 +56,30 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "selenium_practice.wsgi.application"
 
-MYSQL_DB = os.environ.get("MYSQL_DB", "")
+# MYSQL DB 연결
+# MYSQL_DB = os.environ.get("MYSQL_DB", "")
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.mysql",
+#         "NAME": MYSQL_DB,
+#         "USER": os.environ.get("MYSQL_USER", ""),
+#         "PASSWORD": os.environ.get("MYSQL_PASSWORD", ""),
+#         "HOST": os.environ.get("MYSQL_HOST", ""),
+#         "PORT": os.environ.get("MYSQL_PORT", ""),
+#     }
+# }
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": MYSQL_DB,
-        "USER": os.environ.get("MYSQL_USER", ""),
-        "PASSWORD": os.environ.get("MYSQL_PASSWORD", ""),
-        "HOST": os.environ.get("MYSQL_HOST", ""),
-        "PORT": os.environ.get("MYSQL_PORT", ""),
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.environ.get("POSTGRES_DB"),
+        "USER": os.environ.get("POSTGRES_USER"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
+        "HOST": os.environ.get("POSTGRES_HOST"),
+        "PORT": os.environ.get("POSTGRES_PORT"),
+        "OPTIONS": {
+            "sslmode": "allow",
+        },
     }
 }
 
