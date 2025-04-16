@@ -50,6 +50,10 @@
                             width: 15px;
                             height: fit-content;
                         }
+
+                        a:hover {
+                            color: var(--scroll-pink); 
+                        }
                     }
                 }
                 

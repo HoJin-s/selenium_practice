@@ -2,11 +2,21 @@
     <div class="footer-container">
       <div class="footer-line"></div>
       <div class="footer-content-wrap">
-        <div class="footer-title">
+        <div 
+        class="footer-title"   
+        data-aos="fade-up"
+        data-aos-anchor-placement="center-bottom"
+        data-aos-duration="1000"
+        >
           <img src="@/assets/image/article.png" alt="logo"/>
           <h3>호진일보</h3>
         </div>
-        <div class="footer-link-wrap">
+        <div 
+        class="footer-link-wrap"
+        data-aos="fade-up"
+        data-aos-anchor-placement="center-bottom"
+        data-aos-duration="1000"
+        >
           <div 
           v-for="article in linkList" key="list" 
           class="link-container"
@@ -31,6 +41,11 @@
 </template>
 
 <script setup>
+import 'aos/dist/aos.css'
+import AOS from 'aos'
+
+import { onMounted } from 'vue';
+
 const linkList = {
   same: {
     title: '카테고리별 엔터기사',
@@ -88,6 +103,11 @@ const linkList = {
     ]
   }
 }
+
+onMounted(() => {
+  AOS.init();
+  AOS.refresh();
+})
 
 </script>
 

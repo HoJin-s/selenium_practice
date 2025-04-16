@@ -31,20 +31,37 @@
     width: 80%;
     margin: 30px auto 0 auto;
     padding: 30px;
+    background-color: var(--card-bg);
+    border-radius: 2rem;
+    box-shadow: 0 2px 4px var(--pastel-pink-shadow);
 
     display: flex;
     justify-content: center;
     gap: 30px;
 
-    &:hover {
+    &.aos-animate:hover {
         font-weight: 200;
         background-color: var(--pastel-pink);
         border-radius: 20px;
+        transition: all 0.5s;
+        transform: translateY(0) scale(1.05);
     }
 
-    img {
-        width: fit-content;
-        height: 300px;
+    .defalt-thumbnail-wrap {
+        width: 30%;
+        height: 350px;
+        box-sizing: border-box;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        border-radius: 2rem;
+
+        img {
+            width: 100%;
+            height: fit-content;
+            object-fit: contain;
+            border-radius: 2rem;
+        }
     }
 
     .defalt-thumbnail {
@@ -71,3 +88,29 @@
     justify-content: center;
     align-items: center;
 }
+
+.loading_spinner_trade {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    margin: auto;
+    text-align: center;
+    padding-left: 15px;
+  }
+  
+  .loading_circle_trade {
+    margin: 50px auto;
+    width: 40px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(farthest-side, #f19d9d 94%, #0000) top / 8px 8px no-repeat,
+      conic-gradient(#0000 30%, #f19d9d);
+    -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+    animation: load 1.5s linear infinite;
+  }
+  
+  @keyframes load {
+    100% {
+      transform: rotate(1turn);
+    }
+  }
