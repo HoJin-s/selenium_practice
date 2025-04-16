@@ -1,1 +1,1 @@
-web: gunicorn selenium_practice.wsgi
+web: gunicorn selenium_practice.wsgi:application --chdir backend
