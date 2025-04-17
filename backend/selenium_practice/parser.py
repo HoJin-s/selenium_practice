@@ -43,6 +43,12 @@ if want_day:
 else:
     driver.get(f"https://m.entertain.naver.com/ranking")
 
+WebDriverWait(driver, 10).until(
+    EC.presence_of_all_elements_located((By.CLASS_NAME, "NewsItem_news_item__fhEmd"))
+)
+articles = driver.find_elements(By.CLASS_NAME, "NewsItem_news_item__fhEmd")
+assert len(articles) >= 4, "기사 개수가 부족합니다."
+
 # 스크래핑
 try:
     all_articles = []  # 임시 저장 리스트
