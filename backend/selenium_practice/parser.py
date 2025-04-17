@@ -35,10 +35,6 @@ options.add_argument("--no-sandbox")  # root 환경에서 실행 에러 방지
 options.add_argument("--disable-dev-shm-usage")  # 메모리 공유 제한 문제 해결
 driver = webdriver.Chrome(options=options)
 
-print("📡 POSTGRES_HOST:", os.environ.get("POSTGRES_HOST"))
-print("📡 POSTGRES_USER:", os.environ.get("POSTGRES_USER"))
-print("📡 POSTGRES_DB:", os.environ.get("POSTGRES_DB"))
-
 # 크롬 드라이버로 원하는 url 접속
 want_day = ""
 if want_day:
