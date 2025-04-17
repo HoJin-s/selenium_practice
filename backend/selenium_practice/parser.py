@@ -7,6 +7,7 @@ import os
 import sys
 import django
 import datetime
+import chromedriver_autoinstaller
 from bs4 import BeautifulSoup
 
 # 콘솔 출력 인코딩을 UTF-8로 변경
@@ -26,6 +27,7 @@ django.setup()
 from articles.models import Article
 
 # Chrome 웹 브라우저 옵션 설정
+chromedriver_autoinstaller.install()  # ChromeDriver 자동 설치
 options = webdriver.ChromeOptions()
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 options.add_argument("--headless")  # 브라우저 창 없이 백그라운드 실행
