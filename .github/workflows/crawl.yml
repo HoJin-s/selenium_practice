@@ -31,6 +31,9 @@ jobs:
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo apt install -y ./google-chrome-stable_current_amd64.deb
 
+      - name: Print current UTC time ⏱️
+        run: date -u
+
       - name: Run crawler
         env:
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
