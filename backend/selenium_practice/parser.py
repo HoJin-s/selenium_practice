@@ -39,22 +39,21 @@ driver = webdriver.Chrome(options=options)
 want_day = ""
 if want_day:
     driver.get(f"https://m.entertain.naver.com/ranking?rankingDate={want_day}")
-    time.sleep(2)
+    time.sleep(4)
 else:
     driver.get(f"https://m.entertain.naver.com/ranking")
 
 # 스크래핑
-for i in range(4):
+articles = driver.find_elements(By.CLASS_NAME, "NewsItem_news_item__fhEmd")
+for i in range(min(4, len(articles))):
     print(f"{i+1}번째 기사 스크래핑중...")
-
-    articles = driver.find_elements(By.CLASS_NAME, "NewsItem_news_item__fhEmd")
     # i 번째 기사 클릭
     article_link = articles[i].find_element(By.TAG_NAME, "a")
     # article_link.click()
     driver.execute_script("arguments[0].scrollIntoView(true);", article_link)
-    time.sleep(1)
-    driver.execute_script("arguments[0].click();", article_link)
     time.sleep(2)
+    driver.execute_script("arguments[0].click();", article_link)
+    time.sleep(4)
 
     WebDriverWait(driver, 10).until(
         lambda d: d.execute_script("return document.readyState") == "complete"
