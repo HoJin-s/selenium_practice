@@ -35,6 +35,10 @@ options.add_argument("--no-sandbox")  # root 환경에서 실행 에러 방지
 options.add_argument("--disable-dev-shm-usage")  # 메모리 공유 제한 문제 해결
 driver = webdriver.Chrome(options=options)
 
+print("📡 POSTGRES_HOST:", os.environ.get("POSTGRES_HOST"))
+print("📡 POSTGRES_USER:", os.environ.get("POSTGRES_USER"))
+print("📡 POSTGRES_DB:", os.environ.get("POSTGRES_DB"))
+
 # 크롬 드라이버로 원하는 url 접속
 want_day = ""
 if want_day:
@@ -56,14 +60,15 @@ try:
     for i in range(4):
         articles = driver.find_elements(By.CLASS_NAME, "NewsItem_news_item__fhEmd")
         print(f"{i+1}번째 기사 스크래핑중...")
-        # i 번째 기사 클릭
-        article_link = articles[i].find_element(By.TAG_NAME, "a")
-        # article_link.click()
-        driver.execute_script("arguments[0].scrollIntoView(true);", article_link)
-        time.sleep(2)
-        driver.execute_script("arguments[0].click();", article_link)
-        time.sleep(4)
 
+        article_link = articles[i].find_element(By.TAG_NAME, "a")
+        # 클릭 전 요소 스크롤 및 클릭 가능 대기
+        driver.execute_script("arguments[0].scrollIntoView(true);", article_link)
+        WebDriverWait(driver, 10).until(EC.element_to_be_clickable(article_link))
+        # 기사 클릭
+        driver.execute_script("arguments[0].click();", article_link)
+
+        # 새 페이지 로딩 대기
         WebDriverWait(driver, 10).until(
             lambda d: d.execute_script("return document.readyState") == "complete"
         )
@@ -151,6 +156,8 @@ try:
                 content=article["content"],
                 thumbnail=article["thumbnail"],
             )
+
+    print("DB 저장 완료.")
 
 except Exception as e:
     print("전체 스크래핑 중단됨. DB 저장 취소됨.")

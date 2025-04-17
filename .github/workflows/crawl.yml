@@ -32,6 +32,12 @@ jobs:
           sudo apt install -y ./google-chrome-stable_current_amd64.deb
 
       - name: Run crawler
+        env:
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
         run: |
           cd backend
           python selenium_practice/parser.py
