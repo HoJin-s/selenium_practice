@@ -28,6 +28,9 @@ from articles.models import Article
 # Chrome 웹 브라우저 옵션 설정
 options = webdriver.ChromeOptions()
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
+options.add_argument("--headless")  # 브라우저 창 없이 백그라운드 실행
+options.add_argument("--no-sandbox")  # root 환경에서 실행 에러 방지
+options.add_argument("--disable-dev-shm-usage")  # 메모리 공유 제한 문제 해결
 driver = webdriver.Chrome(options=options)
 
 # 크롬 드라이버로 원하는 url 접속
@@ -64,11 +67,11 @@ for i in range(4):
     title = title_element.text
     print(f"제목 : {title}")
 
-    # 날짜 돌린 일자로 자동 저장 
+    # 날짜 돌린 일자로 자동 저장
     if want_day:
         date = datetime.datetime.strptime(want_day, "%Y%m%d")
-        weekday = date.strftime("%A")  
-        
+        weekday = date.strftime("%A")
+
     # 본문과 이미지를 순서대로 저장할 리스트
     content_list = []
 
@@ -109,10 +112,14 @@ for i in range(4):
 
     # 데이터베이스에 저장
     if want_day:
-        Article.objects.create(title=title, content=content_list, thumbnail=thumbnail, day_of_week_category=weekday)
+        Article.objects.create(
+            title=title,
+            content=content_list,
+            thumbnail=thumbnail,
+            day_of_week_category=weekday,
+        )
     else:
         Article.objects.create(title=title, content=content_list, thumbnail=thumbnail)
-
 
     # 뒤로가기 실행하여 이전 페이지로 돌아감
     driver.execute_script("window.history.go(-1)")
