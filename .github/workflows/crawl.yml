@@ -9,7 +9,11 @@ on:
       should_fail:
         description: "강제로 실패시킬까요?"
         required: true
-        default: "false"
+        default: "아니오"
+        type: choice
+        options:
+          - "아니오"
+          - "네. 강제로 실패시켜주세요"
 
 jobs:
   crawl:
@@ -25,7 +29,7 @@ jobs:
           python-version: "3.10"
 
       - name: ❌ Fail intentionally if requested
-        if: ${{ github.event.inputs.should_fail == 'true' }}
+        if: ${{ github.event.inputs.should_fail == '네. 강제로 실패시켜주세요' }}
         run: |
           echo "의도적으로 실패시킵니다."
           exit 1
@@ -83,7 +87,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*📅  TIME :* '"$(date '+%Y-%m-%d %H:%M')"'"
+                  "text": "*📅  TIME(Seoul) :* '"$(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"'"
                 }
               },
               {
