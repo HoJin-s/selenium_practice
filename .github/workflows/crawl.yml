@@ -36,7 +36,7 @@ jobs:
 
       - name: 💤 Wake up Render Server
         run: |
-          curl --silent --show-error --fail https://your-service.onrender.com/
+          curl --silent --show-error --fail https://hojin-news-server.onrender.com
           sleep 10
 
       - name: ⚡ Run crawler
@@ -48,4 +48,13 @@ jobs:
           POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
         run: |
           cd backend
-          python selenium_practice/parser.py
+          python selenium_practice/parser.py || exit 1
+
+      - name: 📣 Slack Alert on Failure
+        if: failure()
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+          --data '{
+            "text": "--------------------------------------------------------------------------------------------------------------\n\n  🛑 *Crawling Failure Alert* 🛑\n\n  📅 TIME : '"$(date '+%Y-%m-%d %H:%M')"'\n\n  🔁 RESTART : https://github.com/HoJin-s/selenium_practice/actions/workflows/crawl.yml"\n\n--------------------------------------------------------------------------------------------------------------
+          }' \
+          ${{ secrets.SLACK_WEBHOOK_URL }}

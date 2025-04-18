@@ -156,10 +156,10 @@ try:
     print("DB 저장 완료.")
 
 except Exception as e:
-    print(
-        "전체 스크래핑 중단됨. DB 저장 취소됨. DB crawlerlog 테이블에 실패 로그 저장."
-    )
-    print("오류 발생:", e)
+    print("전체 스크래핑 중단 및 DB 저장 취소")
+    print("DB crawlerlog 테이블에 실패 로그 저장")
+    print("Slack 으로 실패 알람 발송")
+    print("오류 :", e)
 
     # 크롤링 실패 로그 DB에 저장
     CrawlerLog.objects.create(
