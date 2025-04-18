@@ -34,7 +34,7 @@ jobs:
       - name: Print current UTC time
         run: date -u
 
-      - name: Run crawler
+      - name: Run crawler with logging
         env:
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
@@ -43,4 +43,23 @@ jobs:
           POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
         run: |
           cd backend
-          python selenium_practice/parser.py
+          mkdir -p logs
+          TIMESTAMP=$(date -u +'%Y-%m-%dT%H-%M-%SZ')
+
+          if python selenium_practice/parser.py > temp_output.txt 2>&1; then
+            LOG_FILE="logs/crawler_log_${TIMESTAMP}_✔️[SUCCESS]✔️.txt"
+            echo "✔️ 크롤링 성공 (UTC: $TIMESTAMP)" > $LOG_FILE
+          else
+            LOG_FILE="logs/crawler_log_${TIMESTAMP}_❌[FAIL]❌.txt"
+            echo "❌ 크롤링 실패 (UTC: $TIMESTAMP)" > $LOG_FILE
+          fi
+
+          cat temp_output.txt >> $LOG_FILE
+          rm temp_output.txt
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: crawler-logs
+          path: backend/logs/
