@@ -80,6 +80,13 @@ jobs:
                   "text": "*🔁  RESTART :* <https://github.com/HoJin-s/selenium_practice/actions/workflows/crawl.yml|Github Link>\n\n"
                 }
               },
+                            {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": " \n"
+                }
+              },
               {
                 "type": "divider"
               }

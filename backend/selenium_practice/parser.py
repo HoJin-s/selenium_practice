@@ -75,11 +75,8 @@ try:
                 (By.CLASS_NAME, "NewsEndMain_article_title__kqEzS")
             )
         )
-        if i == 2:
-            title = title_element.img
-        else:
-            title = title_element.text
-            print(f"제목 : {title}")
+        title = title_element.text
+        print(f"제목 : {title}")
 
         # 날짜 돌린 일자로 자동 저장
         if want_day:
