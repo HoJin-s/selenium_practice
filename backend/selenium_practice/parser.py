@@ -8,6 +8,7 @@ import sys
 import django
 import datetime
 import chromedriver_autoinstaller
+import requests
 from bs4 import BeautifulSoup
 
 # 콘솔 출력 인코딩을 UTF-8로 변경
@@ -158,7 +159,7 @@ try:
 except Exception as e:
     print("전체 스크래핑 중단 및 DB 저장 취소")
     print("DB crawlerlog 테이블에 실패 로그 저장")
-    print("Slack 으로 실패 알람 발송")
+    print("Slack 으로 실패 알림 발송")
     print("오류 :", e)
 
     # 크롤링 실패 로그 DB에 저장
@@ -166,6 +167,68 @@ except Exception as e:
         message=str(e),
         context=f"[{type(e).__name__}] {want_day} 기사 {i+1} - {driver.current_url}",
     )
+
+    # Slack 알림 발송
+    try:
+        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+        slack_url = os.environ["SLACK_WEBHOOK_URL"]
+
+        error_blocks = {
+            "blocks": [
+                {
+                    "type": "section",
+                    "text": {"type": "mrkdwn", "text": " \n "},
+                },
+                {
+                    "type": "header",
+                    "text": {
+                        "type": "plain_text",
+                        "text": "🛑  크롤링 실패 알림  🛑",
+                    },
+                },
+                {
+                    "type": "section",
+                    "text": {"type": "mrkdwn", "text": " \n "},
+                },
+                {"type": "divider"},
+                {
+                    "type": "section",
+                    "text": {"type": "mrkdwn", "text": f"*⏰  시간 :* {now}"},
+                },
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": f"*📄  Error Type :* `{type(e).__name__}`",
+                    },
+                },
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": f"*🗨️  Error Message :* `{str(e)}`",
+                    },
+                },
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "*🔁  재실행 링크 :* <https://github.com/HoJin-s/selenium_practice/actions/workflows/crawl.yml|GitHub Actions>",
+                    },
+                },
+                {
+                    "type": "section",
+                    "text": {"type": "mrkdwn", "text": " \n "},
+                },
+                {"type": "divider"},
+            ]
+        }
+
+        requests.post(url=slack_url, json=error_blocks)
+
+    except Exception as slack_error:
+        print("Slack 전송 중 오류:", slack_error)
+
     raise
 
 # 크롬 드라이버 창 닫기
