@@ -169,6 +169,7 @@ except Exception as e:
         message=str(e),
         context=f"[{type(e).__name__}] {want_day} 기사 {i+1} - {driver.current_url}",
     )
+    raise
 
 # 크롬 드라이버 창 닫기
 finally:
