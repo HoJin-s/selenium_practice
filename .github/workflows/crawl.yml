@@ -60,10 +60,10 @@ jobs:
                 "type": "divider"
               },
               {
-                "type": "section",
+                "type": "header",
                 "text": {
                   "type": "plain_text",
-                  "text": "\n🛑 Crawling Failure Alert 🛑"
+                  "text": "🛑 Crawling Failure Alert 🛑"
                 }
               },
               {
@@ -77,7 +77,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*🔁 RESTART:* <https://github.com/HoJin-s/selenium_practice/actions/workflows/crawl.yml|Github Link>\n"
+                  "text": "*🔁 RESTART:* <https://github.com/HoJin-s/selenium_practice/actions/workflows/crawl.yml|Github Link>\n\n"
                 }
               },
               {
