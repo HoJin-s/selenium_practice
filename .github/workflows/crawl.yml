@@ -2,8 +2,8 @@ name: 🕒 Scheduled Crawler 🕒
 
 on:
   schedule:
-    - cron: "0 22 * * *" # 오전 7:00 (KST)
-    - cron: "0 8 * * *" # 오후 5:00 (KST)
+    - cron: "30 21 * * *" # 오전 6:30 (KST)
+    - cron: "30 7 * * *" # 오후 4:30 (KST)
   workflow_dispatch: # 수동 실행도 가능 : GitHub Actions → Schedule Crawler → Run workflow 눌러서 즉시 테스트 가능
     inputs:
       should_fail:
