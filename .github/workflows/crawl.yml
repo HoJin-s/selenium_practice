@@ -53,8 +53,36 @@ jobs:
       - name: 📣 Slack Alert on Failure
         if: failure()
         run: |
-          curl -X POST -H 'Content-type: application/json' \
+          curl -X POST -H "Content-type: application/json" \
           --data '{
-            "text": "--------------------------------------------------------------------------------------------------------------\n\n  🛑 *Crawling Failure Alert* 🛑\n\n  📅 TIME : '"$(date '+%Y-%m-%d %H:%M')"'\n\n  🔁 RESTART : https://github.com/HoJin-s/selenium_practice/actions/workflows/crawl.yml"\n\n--------------------------------------------------------------------------------------------------------------
+            "blocks": [
+              {
+                "type": "divider"
+              },
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "🛑 Crawling Failure Alert 🛑"
+                }
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*📅 TIME:* '"$(date '+%Y-%m-%d %H:%M')"'"
+                }
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*🔁 RESTART:* <https://github.com/HoJin-s/selenium_practice/actions/workflows/crawl.yml|Github Link>"
+                }
+              },
+              {
+                "type": "divider"
+              }
+            ]
           }' \
           ${{ secrets.SLACK_WEBHOOK_URL }}
