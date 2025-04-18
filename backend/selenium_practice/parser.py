@@ -3,7 +3,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from articles.models import CrawlerLog, Article
 import os
 import sys
 import django
@@ -23,6 +22,9 @@ sys.path.append(BASE_DIR)
 # Django 프로젝트 설정 로드
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "selenium_practice.settings")
 django.setup()
+
+# 이제부터 Django ORM 사용 가능!
+from articles.models import Article, CrawlerLog
 
 # Chrome 웹 브라우저 옵션 설정
 chromedriver_autoinstaller.install()  # ChromeDriver 자동 설치
