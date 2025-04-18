@@ -63,21 +63,21 @@ jobs:
                 "type": "header",
                 "text": {
                   "type": "plain_text",
-                  "text": "🛑 Crawling Failure Alert 🛑"
+                  "text": "🛑  Crawling Failure Alert  🛑"
                 }
               },
               {
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*📅 TIME:* '"$(date '+%Y-%m-%d %H:%M')"'"
+                  "text": "*📅  TIME :* '"$(date '+%Y-%m-%d %H:%M')"'"
                 }
               },
               {
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*🔁 RESTART:* <https://github.com/HoJin-s/selenium_practice/actions/workflows/crawl.yml|Github Link>\n\n"
+                  "text": "*🔁  RESTART :* <https://github.com/HoJin-s/selenium_practice/actions/workflows/crawl.yml|Github Link>\n\n"
                 }
               },
               {
