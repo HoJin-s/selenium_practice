@@ -62,4 +62,4 @@ jobs:
         uses: actions/upload-artifact@v4.6.2
         with:
           name: crawler-logs
-          path: backend/logs/
+          path: backend/logs/crawler-logs_*.txt
