@@ -31,12 +31,14 @@ jobs:
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo apt install -y ./google-chrome-stable_current_amd64.deb
 
-      - name: 🕒 Print current UTC time
-        run: date -u
+      - name: 🕒 Print current time (UTC & KST)
+        run: |
+          echo "UTC : $(date -u '+%Y-%m-%d %H:%M:%S')"
+          echo "KST : $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M:%S')"
 
       - name: 💤 Wake up Render Server
         run: |
-          curl --silent --show-error --fail https://hojin-news-server.onrender.com
+          curl --silent --show-error https://hojin-news-server.onrender.com
           sleep 10
 
       - name: ⚡ Run crawler
